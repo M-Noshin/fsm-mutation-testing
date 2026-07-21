@@ -1,0 +1,91 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Run tests
+        run: pytest -q
+
+  smoke:
+    # Generates a small machine, runs all four algorithms, and checks that the
+    # sequence each one reports really does kill the number of mutants it
+    # claims -- verified by an interpreter that shares no code with the search.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Generate a small specification and mutant set
+        run: |
+          mkdir -p data/fsms data/mutants
+          python - <<'PY'
+          import random
+          random.seed(11)
+          n_states, n_inputs, n_outputs = 12, 3, 3
+          rows = [[s, random.randint(1, n_states), str(i),
+                   random.randint(0, n_outputs - 1)]
+                  for s in range(1, n_states + 1) for i in range(n_inputs)]
+          with open("data/fsms/ci.txt", "w") as fh:
+              fh.write(f"0 {n_states} {len(rows)} {n_inputs} {n_outputs} 0\n")
+              for r in rows:
+                  fh.write(" ".join(map(str, r)) + "\n")
+              fh.write("\n")
+          PY
+          python -c "
+          from fsm_mutation.generate import generate_file
+          print(generate_file('data/fsms/ci.txt', 'data/mutants/ci_2000.txt',
+                              count=2000, fault_type=3, seed=7), 'mutants')"
+
+      - name: Run every algorithm
+        run: |
+          python -m fsm_mutation.run \
+            --machines custom --spec-file data/fsms/ci.txt \
+            --mutant-file data/mutants/ci_2000.txt \
+            --algorithm all --mutants 2000 --budget 20 --depth 6
+
+      - name: Verify reported sequences by independent replay
+        run: |
+          python -m fsm_mutation.validate \
+            results/ci_2000_output.xlsx --data-dir data
+
+      - name: Build the report
+        run: python -m fsm_mutation.report results/*.xlsx -o results/report.xlsx
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: smoke-results
+          path: results/*.xlsx

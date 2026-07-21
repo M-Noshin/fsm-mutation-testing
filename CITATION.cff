@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite both the software and the paper."
+title: "FSM Mutation Testing: RL and look-ahead approaches for distinguishing finite state machine mutants"
+abstract: >-
+  Search algorithms for deriving minimal-length distinguishing tests that kill
+  finite state machine mutants. Implements breadth-first search, depth-first
+  search, Q-learning, and greedy look-ahead over a shared kill-semantics core,
+  with replay-verifiable results.
+type: software
+license: MIT
+version: 1.0.0
+authors:
+  - family-names: Uraz
+    given-names: ""
+  - family-names: Noshin
+    given-names: ""
+  - family-names: El-Fakih
+    given-names: Khaled
+    email: kelfakih@aus.edu
+    affiliation: "College of Engineering, American University of Sharjah"
+keywords:
+  - software engineering
+  - model-based testing
+  - conformance testing
+  - mutation testing
+  - finite state machines
+  - reinforcement learning
+preferred-citation:
+  type: article
+  title: "Reinforcement learning and look-ahead approaches for distinguishing finite state machine mutants"
+  authors:
+    - family-names: Uraz
+      given-names: ""
+    - family-names: Noshin
+      given-names: ""
+    - family-names: El-Fakih
+      given-names: Khaled

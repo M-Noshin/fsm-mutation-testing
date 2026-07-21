@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fsm-mutation-testing"
+version = "1.0.0"
+description = "Reinforcement learning and look-ahead approaches for distinguishing finite state machine mutants"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Uraz" },
+    { name = "Noshin" },
+    { name = "Khaled El-Fakih", email = "kelfakih@aus.edu" },
+]
+dependencies = [
+    "numpy>=1.24",
+    "pandas>=2.0",
+    "openpyxl>=3.1",
+    "psutil>=5.9",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+fsm-run = "fsm_mutation.run:main"
+fsm-report = "fsm_mutation.report:main"
+fsm-validate = "fsm_mutation.validate:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
