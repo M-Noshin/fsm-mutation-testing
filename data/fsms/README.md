@@ -7,7 +7,6 @@ Drop the FSM specification files here. The runner looks for these names:
 | `complete` | `128state_fsms_complete.txt` |
 | `partial`  | `128state_fsms_partial.txt` |
 | `cerny`    | `cerny_machines.txt` |
-| `random`   | `random_fsms.txt` |
 
 Any other file works via `--machines custom --spec-file <path>`.
 

@@ -57,7 +57,6 @@ python -m fsm_mutation.run --machines cerny --algorithm all --mutants 10000
 | `complete` | `128state_fsms_complete.txt` | `⌈n/3⌉` |
 | `partial`  | `128state_fsms_partial.txt`  | `⌈n/3⌉` |
 | `cerny`    | `cerny_machines.txt`         | `4` |
-| `random`   | `random_fsms.txt`            | `⌈n/3⌉` |
 | `custom`   | whatever you pass to `--spec-file` | `--depth` |
 
 `--algorithm` takes `bfs`, `dfs`, `rl`, `la`, or `all`. Look-ahead always runs

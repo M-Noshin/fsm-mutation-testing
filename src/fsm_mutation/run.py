@@ -35,7 +35,6 @@ MACHINE_CLASSES = {
     "complete": {"spec": "128state_fsms_complete.txt", "depth": "n/3"},
     "partial": {"spec": "128state_fsms_partial.txt", "depth": "n/3"},
     "cerny": {"spec": "cerny_machines.txt", "depth": "4"},
-    "random": {"spec": "random_fsms.txt", "depth": "n/3"},
 }
 
 
