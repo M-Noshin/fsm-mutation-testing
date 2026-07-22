@@ -4,8 +4,8 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-Companion code for *Reinforcement learning and look-ahead approaches for
-distinguishing finite state machine mutants* (Uraz, Noshin & El-Fakih,
+Code for *Reinforcement learning and look-ahead approaches for
+distinguishing finite state machine mutants* (Uraz, Noshin & Khaled El-Fakih,
 American University of Sharjah).
 
 Given a deterministic FSM specification `S` and a collection of mutants
